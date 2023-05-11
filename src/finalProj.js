@@ -50,10 +50,6 @@ function newQuestion() {
     currentSelections.push(countries[countryOption2]);
     let countryOption3 = Math.round(Math.random()*249);
     currentSelections.push(countries[countryOption3]);
-	
-	currentCapital = "Paris"; //remove this when live
-	currentCountry = "France"; //remove this when live
-	currentSelections = ["France", "US", "UK", "Spain"]; //remove this when live
     
     function shuffle(array) {
           let currentIndex = currentSelections.length,  randomIndex;
