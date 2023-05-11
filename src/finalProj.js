@@ -136,7 +136,8 @@ console.log(currentCapital + ", " + currentSelections);
 		<Header />
 		<h1>Instructions</h1>
 		To start a new game, click the New Game button. <br /><br />
-		Select the country that matches the capital city shown by clicking the button with the country name. <br />
+		Select the country that matches the capital city shown by clicking the button with the country name. <br /><br />
+		The game ends after you have accumulated three strikes.<br />
 		</div>
 		)
 		}
