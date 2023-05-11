@@ -93,7 +93,7 @@ console.log(currentCapital + ", " + currentSelections);
 		return (
 		<ul id='main-nav'>
 		<li><Link to="/">Game</Link></li>
-		<li><Link to="/settings">Instructions</Link></li>
+		<li><Link to="/instructions">Instructions</Link></li>
 		</ul>
 		);
 		}
@@ -113,7 +113,7 @@ console.log(currentCapital + ", " + currentSelections);
 		<Header />
 		<h1>Play Game</h1>
 			
-		For instructions, click the instructions link in the navigation bar.<br /><br />
+		For instructions, click the Instructions link in the navigation bar.<br /><br />
 			</div>
 		)
 		}
@@ -135,7 +135,8 @@ console.log(currentCapital + ", " + currentSelections);
 		<div class='page'>
 		<Header />
 		<h1>Instructions</h1>
-		Select the country that matches the capital city shown. <br />
+		To start a new game, click the New Game button. <br /><br />
+		Select the country that matches the capital city shown by clicking the button with the country name. <br />
 		</div>
 		)
 		}
