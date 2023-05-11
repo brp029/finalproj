@@ -1,0 +1,13 @@
+@charset "UTF-8";
+/* CSS Document */
+
+.header {width: 100%; padding: 20px 0; text-align:center}
+.header ul#main-nav {list-style-type: none;}
+.header ul#main-nav li {display:inline-block;  padding-right: 20px; }
+.page {width:90%; max-width: 700px; margin: 0 auto}
+.myForm {width: 100%; padding: 20px 0; margin: 20px 190px ; text-align:left}
+.notVisible {visibility: hidden;}
+.nowVisible {visbility: visible;}
+#newGamebtn {margin-left: 20px;}
+.countryBtn {width: 100px; margin-left: 20px; margin-bottom: 10px;}
+
