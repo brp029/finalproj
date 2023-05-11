@@ -8,6 +8,6 @@
 .myForm {width: 100%; padding: 20px 0; margin: 20px 190px ; text-align:left}
 .notVisible {visibility: hidden;}
 .nowVisible {visbility: visible;}
-#newGamebtn {margin-left: 20px;}
-.countryBtn {width: 100px; margin-left: 20px; margin-bottom: 10px;}
+.newGameBtn {width: 200px; height: 50px;}
+.countryBtn {width: 120px; height: 50px; margin-left: 20px; margin-bottom: 10px;}
 
