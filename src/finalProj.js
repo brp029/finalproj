@@ -19,7 +19,7 @@ function getLists() {
     req.withCredentials = true;
     
     req.open('GET', 'https://api.countrylayer.com/v2/all?access_key=a399b98133a1cb241056a67a7ee3e189');
-    req.header('Access-Control-Allow-Origin', 'https://final-proj.herokuapp.com/');
+    req.setRequestHeader('Access-Control-Allow-Origin', 'https://final-proj.herokuapp.com/');
     req.send();
     req.onload = () => {
         let data = JSON.parse(req.response);
