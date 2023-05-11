@@ -1,4 +1,4 @@
-
+// JavaScript Document
 import { useState } from "react";
 import {Routes, Route, Link} from 'react-router-dom';
 import "./pages.css"
@@ -9,12 +9,12 @@ var currentCapital;
 var currentCountry;
 var currentSelections = [];
 var missTally = 0;
+var currentScore = 0;
+var highScore = 0;
 
+	getLists();
 
-
-function GameForm() {
-	
-	function getLists() {
+function getLists() {
     
     var req = new XMLHttpRequest();
     req.withCredentials = true;
@@ -23,6 +23,7 @@ function GameForm() {
     req.send();
     req.onload = async () => {
         let data = await JSON.parse(req.response);
+		console.log(data);
         countries = data.map(countryList);
         capitals = data.map(capitalList);
        // console.log(countries);
@@ -38,9 +39,9 @@ function GameForm() {
     }
 	
 }
-	
-	getLists();
 
+
+function GameForm() {
 	
 	function newQuestion() {
     	currentSelections = [];
@@ -148,6 +149,8 @@ console.log(currentCapital + ", " + currentSelections);
 		console.log(match);
 		console.log(answer);
 		if (match == answer) {
+			currentScore++;
+			document.getElementById("currentScore").innerHTML = currentScore;
 			setGuesses((st)=>[...st,match])
 			setCurrGuess('');
 			triggerNewQuestion(e);
@@ -155,14 +158,37 @@ console.log(currentCapital + ", " + currentSelections);
 		else {
 			alert("Sorry, " + currentCapital + " is the capital of " + currentCountry + ".");
 			missTally++;
-			triggerNewQuestion(e);
+			console.log("missTally: " + missTally);
+			document.getElementById("strikes").innerHTML += "X";
+			if (missTally > 2){
+				alert("Sorry, your game is over. Press New Game to start again.")
+				if (currentScore > highScore){
+					console.log("high score: " + highScore);
+					console.log("current score: " + currentScore);
+					highScore = currentScore;
+					document.getElementById("highScore").innerHTML = highScore;
+					console.log("New high score: " + highScore);
+				}
+			}
+			else {
+				triggerNewQuestion(e);
+			}
+			
 		}
 		
+	}
+	
+	function triggerNewGame(e) {
+		missTally = 0;
+		currentScore = 0;
+		document.getElementById("strikes").innerHTML = "Strike Count: ";
+		document.getElementById("currentScore").innerHTML = currentScore;
+		triggerNewQuestion(e);
 	}
 
 	function triggerNewQuestion(e) {
 		e.preventDefault();
-		setBtn4Text(currentSelections[4]);
+		setBtn1Text(currentSelections[1]);
 		newQuestion();
 	}
 	
@@ -184,7 +210,7 @@ console.log(currentCapital + ", " + currentSelections);
 		
 		
 		<form>
-			<button onClick={(e)=>triggerNewQuestion(e)}>Start Game</button>
+			<button class="newGameBtn" onClick={(e)=>triggerNewGame(e)}>New Game</button>
 			<h3>Which country is {currentCapital} the capital of?</h3>
 			<button class="countryBtn" value={currentSelections[0]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[0]}</button>
 			<button class="countryBtn" value={currentSelections[1]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[1]}</button>
@@ -192,8 +218,10 @@ console.log(currentCapital + ", " + currentSelections);
 			<button class="countryBtn" value={currentSelections[3]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[3]}</button>
 		</form>
 		
-		<hr />
-		
+		<hr />	
+		<h4 id="strikes">Strike Count: </h4>
+		<h4>Current Score: <div id="currentScore"></div></h4>
+		<h4>High Score: <div id="highScore"></div></h4>
 		<h4>Correct Matches</h4>
 		<ul className='guess-list'>
 			{guesses.map((st, i)=><li key={i}>{st}</li>)}
@@ -207,4 +235,3 @@ export function MyApp()
 {
 	return <GameForm />;
 }
-// JavaScript Document
