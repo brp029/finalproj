@@ -10,82 +10,82 @@ var currentCountry;
 var currentSelections = [];
 var missTally = 0;
 
-getLists();
 
 
-function getLists() {
+function GameForm() {
+	
+	function getLists() {
     
     var req = new XMLHttpRequest();
     req.withCredentials = true;
-    
     req.open('GET', 'https://api.countrylayer.com/v2/all?access_key=a399b98133a1cb241056a67a7ee3e189');
     req.withCredentials = false;
     req.send();
-    req.onload = () => {
-        let data = JSON.parse(req.response);
+    req.onload = async () => {
+        let data = await JSON.parse(req.response);
         countries = data.map(countryList);
         capitals = data.map(capitalList);
-        console.log(countries);
-        console.log(capitals);
+       // console.log(countries);
+       // console.log(capitals);
     }
     
     function countryList(data) {
-        return data.name;
+       return data.name;
     }
 
     function capitalList(data) {
-        return data.capital;
+       return data.capital;
     }
+	
 }
+	
+	getLists();
 
-function newQuestion() {
-    currentSelections = [];
-    let countryID = Math.round(Math.random()*249);
-    console.log(countryID);
-    currentCapital = capitals[countryID];
-	currentCountry = countries[countryID];
-    currentSelections.push(countries[countryID]);
-    let countryOption1 = Math.round(Math.random()*249);
-    currentSelections.push(countries[countryOption1]);
-    let countryOption2 = Math.round(Math.random()*249);
-    currentSelections.push(countries[countryOption2]);
-    let countryOption3 = Math.round(Math.random()*249);
-    currentSelections.push(countries[countryOption3]);
+	
+	function newQuestion() {
+    	currentSelections = [];
+    	let countryID = Math.round(Math.random()*249);
+    	console.log(countryID);
+    	currentCapital = capitals[countryID];
+		currentCountry = countries[countryID];
+    	currentSelections.push(countries[countryID]);
+    	let countryOption1 = Math.round(Math.random()*249);
+    	currentSelections.push(countries[countryOption1]);
+    	let countryOption2 = Math.round(Math.random()*249);
+    	currentSelections.push(countries[countryOption2]);
+    	let countryOption3 = Math.round(Math.random()*249);
+    	currentSelections.push(countries[countryOption3]);
+		console.log(currentSelections);
     
     function shuffle(array) {
           let currentIndex = currentSelections.length,  randomIndex;
 
-          // While there remain elements to shuffle.
           while (currentIndex != 0) {
+          	randomIndex = Math.floor(Math.random() * currentIndex);
+          	currentIndex--;
 
-        // Pick a remaining element.
-        randomIndex = Math.floor(Math.random() * currentIndex);
-        currentIndex--;
-
-        // And swap it with the current element.
-        [array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
+          	[array[currentIndex], array[randomIndex]] = [array[randomIndex], array[currentIndex]];
           }
 
           return array;
-    }
+     }
 
 // Shuffle my country array
 shuffle(currentSelections);
     
 console.log(currentCapital + ", " + currentSelections);
 }
-
-function generateQuestion() {
-    newQuestion();
-}
-
-function GameForm() {
-	
-	newQuestion();
 	
 	const [currGuess, setCurrGuess] = useState('');
+	const [btn0Text, setBtn0Text] = useState('');
+	const [btn1Text, setBtn1Text] = useState('');
+	const [btn2Text, setBtn2Text] = useState('');
+	const [btn3Text, setBtn3Text] = useState('');
+	const [btn4Text, setBtn4Text] = useState('');
 	var g = [];
 	const [guesses, setGuesses] = useState(g); //add guess to Guess list
+	
+
 	
 	function Nav()
 		{
@@ -111,6 +111,7 @@ function GameForm() {
 		<div className='page'>
 		<Header />
 		<h1>Play Game</h1>
+			
 		For instructions, click the instructions link in the navigation bar.<br /><br />
 			</div>
 		)
@@ -149,14 +150,22 @@ function GameForm() {
 		if (match == answer) {
 			setGuesses((st)=>[...st,match])
 			setCurrGuess('');
-			newQuestion();
+			triggerNewQuestion(e);
 		} 
 		else {
-			alert("Wrong Answer!")
+			alert("Sorry, " + currentCapital + " is the capital of " + currentCountry + ".");
 			missTally++;
+			triggerNewQuestion(e);
 		}
 		
 	}
+
+	function triggerNewQuestion(e) {
+		e.preventDefault();
+		setBtn4Text(currentSelections[4]);
+		newQuestion();
+	}
+	
 	
 	
 	return (
@@ -172,9 +181,11 @@ function GameForm() {
 		
 		
 		<div class="myForm">
-		<h3>Which country is {currentCapital} the capital of?</h3>
+		
 		
 		<form>
+			<button onClick={(e)=>triggerNewQuestion(e)}>Start Game</button>
+			<h3>Which country is {currentCapital} the capital of?</h3>
 			<button class="countryBtn" value={currentSelections[0]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[0]}</button>
 			<button class="countryBtn" value={currentSelections[1]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[1]}</button>
 			<button class="countryBtn" value={currentSelections[2]} onClick={(e)=>handleNewGuess(e)}>{currentSelections[2]}</button>
